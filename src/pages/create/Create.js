@@ -1,5 +1,6 @@
 // importing styles
 import { useRef, useState } from 'react'
+import useFetch from '../../hooks/useFetch';
 import './Create.css'
 
 const Create = () => {
@@ -15,9 +16,15 @@ const Create = () => {
   // using this ref to get handler that DOM element and we use focus method to focus on input field 
   const ingredientInput = useRef(null);
 
+  const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(title, method, cookingTime, ingredients);
+
+    // instead of logging we have to make POST request to add the input date to the json
+    // console.log(title, method, cookingTime, ingredients);
+
+    postData({ title, ingredients, method, cookingTime: cookingTime + ' minutes'});
   }
 
   const handleIngredientsAdd = e => {
