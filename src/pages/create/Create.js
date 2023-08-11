@@ -1,5 +1,5 @@
 // importing styles
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './Create.css'
 
 const Create = () => {
@@ -8,9 +8,27 @@ const Create = () => {
   const [method, setMethod] = useState('');
   const [cookingTime, setCookingTime] = useState('');
 
+  // state for adding the ingredients
+  const [newIngredients, setNewIngredients] = useState('');    // input in form
+  const [ingredients, setIngredients] = useState([]);          // display the total ingredients added beneath the text field
+
+  // using this ref to get handler that DOM element and we use focus method to focus on input field 
+  const ingredientInput = useRef(null);
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(title, method, cookingTime);
+    console.log(title, method, cookingTime, ingredients);
+  }
+
+  const handleIngredientsAdd = e => {
+    e.preventDefault();
+    const ing = newIngredients.trim()     // trim out space
+ 
+    if(ing && !ingredients.includes(ing)) {       // ingredient is an array thats why we use includes
+      setIngredients(prevIngredients => [...prevIngredients, ing])    // returning a array
+    }
+    setNewIngredients('');
+    ingredientInput.current.focus()
   }
 
   return (
@@ -23,6 +41,14 @@ const Create = () => {
           </label>
 
           {/* ingredients go here */}
+          <label>
+            <span>Recipe Ingredients:</span>
+            <div className="ingredients">
+              <input type="text" onChange={e => setNewIngredients(e.target.value)} value={newIngredients} ref={ingredientInput}/>
+              <button onClick = {handleIngredientsAdd} className='btn'>add</button>
+            </div>
+          </label>
+          <p>Current Ingredients:{ingredients && ingredients.map(i => <em key={i}>{i}, </em>)}</p>
 
           <label>
             <span>Recipe Method:</span>
