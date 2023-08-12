@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch';
+import useTheme from '../../hooks/useTheme'
 import './Create.css'
 
 const Create = () => {
@@ -48,8 +49,10 @@ const Create = () => {
     }
   }, [data])
 
+  const { mode } = useTheme()
+
   return (
-    <div className='create'>
+    <div className={`create ${mode}`}>
         <h2 className='page-title'>Add a New Recipe</h2>
         <form onSubmit={handleSubmit}>
           <label>

@@ -47,6 +47,17 @@
       "method": "ubal de bhai paani ko",
       "cookingTime": "15 minutes",
       "id": "57VjJdv"
+    },
+    {
+      "title": "maggi",
+      "ingredients": [
+        "paani",
+        "masala",
+        "dhaniya"
+      ],
+      "method": "ubal de bhai paani ke saath phir masala daal dio phir sabzi daal dio phir kha lio",
+      "cookingTime": "5 minutes",
+      "id": "nnCG4Ew"
     }
   ]
 }
