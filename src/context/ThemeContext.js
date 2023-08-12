@@ -9,7 +9,7 @@ const ThemeContext = createContext();     // return a new context object and it 
 const themeReducer = (state, action) => {
     switch(action.type) 
     {
-        case 'CHANGE_COLOR': return { ...state, color: action.payload }    // return an updated state object
+        case 'CHANGE_COLOR': return { ...state, color: action.payload }    // return an updated state object, the color property override the value because javasciprt object has unique key
 
         default: return state
     }
@@ -19,7 +19,7 @@ const themeReducer = (state, action) => {
 // any component in the application could access the value provided as prop in line 13 below by our Theme context provider
 export function ThemeProvider({ children }) {
     const [state, dispatch] = useReducer(themeReducer, {
-        color: 'blue'
+        color: '#58249c'    // default color
     })
 
     const changeColor = (color) => {
