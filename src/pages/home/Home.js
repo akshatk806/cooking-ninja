@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     setIsPending(true);
 
-    projectFirestore.collection('recipes').get().then((snapshot) => {
+    const unsub = projectFirestore.collection('recipes').onSnapshot((snapshot) => {    // onSnapshot is for real time
       // console.log(snapshot)
       if(snapshot.empty) {
         setError("No recipes to load");
@@ -30,11 +30,13 @@ const Home = () => {
         setData(results);
         setIsPending(false);
       }
+    }, (err) => {
+      setError(err.message)
+      setIsPending(false)
     })    // asynchronous means this take some time to complete
-    .catch(err => {
-      setError(err.message);
-      setIsPending(false);
-    })
+
+    // cleanup function-> remove subscription
+    return () => unsub()
   }, [])
 
   return (
