@@ -1,5 +1,6 @@
 // importing styles
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch';
 import './Create.css'
 
@@ -16,6 +17,8 @@ const Create = () => {
   // using this ref to get handler that DOM element and we use focus method to focus on input field 
   const ingredientInput = useRef(null);
 
+  const history = useHistory();
+  
   const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
 
   const handleSubmit = e => {
@@ -37,6 +40,13 @@ const Create = () => {
     setNewIngredients('');
     ingredientInput.current.focus()
   }
+
+  // redirect the user when we get data response
+  useEffect(()=>{
+    if(data) {
+      history.push('/');
+    }
+  }, [data])
 
   return (
     <div className='create'>
