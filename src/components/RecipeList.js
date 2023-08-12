@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import useTheme from '../hooks/useTheme'
+import trashcan from '../assets/trashcan.svg'
+import { projectFirestore } from "../firebase/config";
 import "./RecipeList.css"
 
 const RecipeList = (props) => {
@@ -7,6 +9,11 @@ const RecipeList = (props) => {
 
   if(props.recipes.length === 0) {
     return <div className='error'>No Recipes to Cook...</div>
+  }
+
+  const handleClick = (id) => {
+    // we communicate with firestore here
+    projectFirestore.collection('recipes').doc(id).delete()
   }
 
   return (
@@ -17,6 +24,11 @@ const RecipeList = (props) => {
                 <p>{recipe.cookingTime} to make.</p>
                 <div>{recipe.method.substring(0, 100)}...</div>
                 <Link to={`/recipes/${recipe.id}`}>CooK This</Link>
+                <img 
+                  className='delete'
+                  src = {trashcan}
+                  onClick={() => handleClick(recipe.id)}
+                />
             </div>
         ))}
     </div>
