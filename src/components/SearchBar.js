@@ -9,6 +9,7 @@ const SearchBar = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        setSearchTerm('');
         // redirect the user to search page by adding the query parameter
         // q?=momos 
         history.push(`/search?q=${searchTerm}`);
@@ -18,7 +19,7 @@ const SearchBar = () => {
     <div className='searchbar'>
         <form onSubmit={handleSubmit}>
             <label htmlFor="search">Search:</label>
-            <input type="text" id="search" onChange={e => setSearchTerm(e.target.value)} required/>
+            <input type="text" id="search" onChange={e => setSearchTerm(e.target.value)} value={searchTerm} required/>
         </form>
     </div>
   )
