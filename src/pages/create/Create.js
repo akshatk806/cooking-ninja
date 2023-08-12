@@ -1,8 +1,9 @@
 // importing styles
 import { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch';
 import useTheme from '../../hooks/useTheme'
+import { projectFirestore } from "../../firebase/config";
+
 import './Create.css'
 
 const Create = () => {
@@ -20,15 +21,23 @@ const Create = () => {
 
   const history = useHistory();
   
-  const { postData, data } = useFetch('http://localhost:3000/recipes', 'POST')
+  // const { postData, data } = useFetch('http://localhost:3000/recipes', 'POST')
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // instead of logging we have to make POST request to add the input date to the json
     // console.log(title, method, cookingTime, ingredients);
 
-    postData({ title, ingredients, method, cookingTime: cookingTime + ' minutes'});
+    const doc = { title, ingredients, method, cookingTime: cookingTime + ' minutes'}
+
+    try {
+      await projectFirestore.collection('recipes').add(doc);
+      history.push('/');    // redirecting
+    }
+    catch(err) {
+      console.error(err);
+    }
   }
 
   const handleIngredientsAdd = e => {
@@ -42,12 +51,14 @@ const Create = () => {
     ingredientInput.current.focus()
   }
 
+  /*
   // redirect the user when we get data response
   useEffect(()=>{
     if(data) {
       history.push('/');
     }
   }, [data, history])
+  */
 
   const { color, mode } = useTheme()
 
