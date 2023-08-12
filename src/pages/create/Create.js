@@ -49,7 +49,7 @@ const Create = () => {
     }
   }, [data])
 
-  const { mode } = useTheme()
+  const { color, mode } = useTheme()
 
   return (
     <div className={`create ${mode}`}>
@@ -65,7 +65,7 @@ const Create = () => {
             <span>Recipe Ingredients:</span>
             <div className="ingredients">
               <input type="text" onChange={e => setNewIngredients(e.target.value)} value={newIngredients} ref={ingredientInput}/>
-              <button onClick = {handleIngredientsAdd} className='btn'>add</button>
+              <button onClick = {handleIngredientsAdd} className='btn' style={{background:color}}>add</button>
             </div>
           </label>
           <p>Current Ingredients:{ingredients && ingredients.map(i => <em key={i}>{i}, </em>)}</p>
@@ -80,7 +80,7 @@ const Create = () => {
             <input type="number" onChange={e=>setCookingTime(e.target.value)} value={cookingTime} required/>
           </label>
 
-          <button className="btn">submit</button>
+          <button className="btn" style={{background:color}}>submit</button>
         </form>
     </div>
   )
