@@ -11,6 +11,8 @@ const themeReducer = (state, action) => {
     {
         case 'CHANGE_COLOR': return { ...state, color: action.payload }    // return an updated state object, the color property override the value because javasciprt object has unique key
 
+        case 'CHANGE_MODE': return { ...state, mode: action.payload }
+
         default: return state
     }
 }
@@ -19,7 +21,8 @@ const themeReducer = (state, action) => {
 // any component in the application could access the value provided as prop in line 13 below by our Theme context provider
 export function ThemeProvider({ children }) {
     const [state, dispatch] = useReducer(themeReducer, {
-        color: '#58249c'    // default color
+        color: '#58249c',    // default color
+        mode: 'light'
     })
 
     const changeColor = (color) => {
@@ -27,9 +30,13 @@ export function ThemeProvider({ children }) {
     }
     // using type we can manage multiple state  
 
+    const changeMode = (mode) => {
+        dispatch( {type: 'CHANGE_MODE', payload: mode } )
+    }
+
     // we gonna return a template, and the template is context provider component that just wraps our childer
     return (
-        <ThemeContext.Provider value={{...state, changeColor }}>
+        <ThemeContext.Provider value={{...state, changeColor, changeMode }}>
             {children}
         </ThemeContext.Provider>
     )
