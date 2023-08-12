@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom'
-// hook for accesing a context value in this value
-import { useContext } from 'react'
 
-// importing the context(name of the context is ThemeContext)
-import ThemeContext from '../context/ThemeContext'
+// importing out custom theme hook
+import useTheme from '../hooks/useTheme'
 
 import SearchBar from './SearchBar'
 
@@ -11,7 +9,7 @@ import SearchBar from './SearchBar'
 import './Navbar.css'
 
 const Navbar = () => {
-  const { color } = useContext(ThemeContext)
+  const { color } = useTheme()
 
   return (
     <div className='navbar' style={{ background:color }}>
