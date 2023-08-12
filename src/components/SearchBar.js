@@ -9,7 +9,6 @@ const SearchBar = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-
         // redirect the user to search page by adding the query parameter
         // q?=momos 
         history.push(`/search?q=${searchTerm}`);

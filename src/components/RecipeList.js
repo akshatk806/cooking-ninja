@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import "./RecipeList.css"
 
 const RecipeList = (props) => {
+
+  if(props.recipes.length === 0) {
+    return <div className='error'>No Recipes to Cook...</div>
+  }
+
   return (
     <div className="recipe-list">
         {props.recipes.map((recipe) => (
